@@ -1,0 +1,203 @@
+<html>
+  <head>
+    <title>Sum numbers under MPC</title>
+    
+    <style>
+      /* CSS declarations go here */
+
+h2{
+    text-align: center;
+    color: darkgreen;
+    width:50%;
+}
+        h1{
+            text-align: center;
+        }
+img{
+    width: 60%;
+}
+
+
+
+
+    </style>
+    
+    <!-- jiff and required libraries -->
+    
+    <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/lib/cryptico.min.js"></script>
+    <script src="/lib/jiff-client.js"></script>
+      <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+    
+    <script type="text/javascript">
+      var jiff_instance;
+      
+      function connect() {
+        $('#connectButton').prop('disabled', true);
+        var computation_id = $('#computation_id').val();
+        var party_count = parseInt($('#count').val());
+        
+        if(isNaN(party_count)) {
+          $("#output").append("<p class='error'>Party count must be a valid number!</p>");
+          $('#connectButton').prop('disabled', false);
+        }
+        
+        else {
+          var options = { party_count: party_count};
+          options.onError = function(error) { $("#output").append("<p class='error'>"+error+"</p>"); };
+          options.onConnect = function() { $("#sumButton").attr("disabled", false); $("#output").append("<p>All parties Connected!</p>"); };
+          
+          var hostname = window.location.hostname.trim();
+          var port = window.location.port;
+          if(port == null || port == '') 
+            port = "80";
+          if(!(hostname.startsWith("http://") || hostname.startsWith("https://")))
+            hostname = "http://" + hostname;
+          if(hostname.endsWith("/"))
+            hostname = hostname.substring(0, hostname.length-1);
+          if(hostname.indexOf(":") > -1)
+            hostanme = hostname.substring(0, hostname.indexOf(":"));
+  
+          hostname = hostname + ":" + port;
+          jiff_instance = jiff.make_jiff(hostname, computation_id, options);
+        console.log(jiff_instance);
+        }
+      } 
+
+
+
+        
+        function exefunction(){
+                var box1 = document.getElementById("raceChoice1");
+                var number1 = 0;
+                if (box1.checked){
+                    number1 += 1;
+                }
+                var box2 = document.getElementById("raceChoice2");
+                var number2 = 0;
+                if (box2.checked){
+                    number2 += 1;
+                }
+                var box3 = document.getElementById("raceChoice3");
+                var number3 = 0;
+                if (box3.checked){
+                    number3 += 1;
+                }
+                var box4 = document.getElementById("raceChoice4");
+                var number4 = 0;
+                if (box4.checked){
+                    number4 += 1;
+                }
+                var box5 = document.getElementById("raceChoice5");
+                var number5 = 0;
+                if (box5.checked){
+                    number5 += 1;
+                }
+            var box6 = document.getElementById("raceChoice6");
+                var number6 = 0;
+                if (box6.checked){
+                    number6 += 1;
+                }
+                sum(number1);
+                sum(number2);
+                sum(number3);
+                sum(number4);
+                sum(number5);
+                sum(number6);
+                
+        }
+                
+      function sum(choice) {
+        var input = parseInt(choice);
+
+        if(isNaN(input))
+          $("#output").append("<p class='error'>Input a valid number!</p>");
+        else if(100 < input || input < 0 || input != Math.floor(input))
+          $("#output").append("<p class='error'>Input a WHOLE number between 0 and 100!</p>");
+        else if(jiff_instance == null || !jiff_instance.ready)
+          alert("Please wait!");
+        else
+          MPC(input);
+      }
+      
+      function MPC(input) {
+        $("#sumButton").attr("disabled", true);
+        //$("#output").append("<p>Waiting...</p>");
+        var shares = jiff_instance.share(input);
+        
+        var sum = shares[1];
+        for(var i = 2; i <= jiff_instance.party_count; i++)
+          sum = sum.sadd(shares[i]);
+        
+        
+        sum.open(handleResult);
+        
+        
+      }
+    var results = [];
+      function handleResult(result) {
+          results.push(result);
+          console.log(results);
+          var chart = new CanvasJS.Chart("chartContainer", {
+		title:{
+			text: "Diversity Distribution"              
+		},
+		data: [              
+		{
+			
+			type: "column",
+			dataPoints: [
+				{ label: "Caucasion",  y: results[0]  },
+				{ label: "African American", y: results[1]  },
+				{ label: "Hispanic or Latino", y :results[2]  },
+				{ label: "American Indian/Alaska Native", y: results[3] },
+				{ label: "Asian",  y: results[4]  },
+                { label: "Native Hawaiian/Other Pacific Islander", y: results[5]}
+			]
+		}
+		]
+	});
+	chart.render();
+
+       // $("#output").append("<p>Distribution: " + result + "</p>");
+        $("#sumButton").attr("disabled", false);
+        
+    
+      }
+    
+        
+    
+
+
+	
+
+    
+    </script>
+  </head>
+  
+  <body>
+    <h1><img src="./divPic.png"></h1>
+<!--    <label for="computation_id">Computation ID</label><input id="computation_id" value="test-sum">-->
+    <center><label for="count">Party Count</label> <input id="count" pattern="[0-9]*"> &nbsp; <button id="connectButton" onclick="connect();">Connect</button>
+    <br> <br>
+    
+    <hr>
+
+        <h2>Race</h2></center>
+        
+        <input id="raceChoice1" type="checkbox"> Caucasian<br>
+        <input id="raceChoice2" type="checkbox"> African American<br>
+        <input id="raceChoice3" type="checkbox">  Hispanic or Latino<br>
+        <input id="raceChoice4" type="checkbox"> American Indian/Alaska Native<br>
+        <input id="raceChoice5" type="checkbox"> Asian<br>
+        <input id="raceChoice6" type="checkbox"> Native Hawaiian/Other Pacific Islander<br>
+        <button onclick="exefunction()">Submit Response</button><br>
+
+    <div id="output"></div>
+    <div id="chartContainer" style="height: 300px; width: 100%;"></div>
+ 
+ 
+
+  </body>
+</html>
