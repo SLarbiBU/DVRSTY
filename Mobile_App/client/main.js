@@ -6,31 +6,7 @@ if(Meteor.isServer){
     // server code goes here
 }
 
-var Todos = new Mongo.Collection('todos');
 
-Todos.insert({
-    name: "Walk the dog",
-    completed: false,
-    createdAt: new Date()
-});
-
-Template.todos.helpers({
-    'todo': function(){
-        return Todos.find({}, {sort: {createdAt: -1}});
-    }
-});
-
-Template.addTodo.events({
-    'submit form': function(event){
-    event.preventDefault();
-    var todoName = $('[name="todoName"]').val();
-    Todos.insert({
-        name: todoName,
-        completed: false,
-        createdAt: new Date()
-  
-});
-    }});
 
 Router.route('/register');
 Router.route('/login');
@@ -40,6 +16,7 @@ Router.route('/who');
 Router.route('/contribute');
 Router.route('/waiting');
 Router.route('/calculate');
+Router.route('display')
 
 
 Router.route('/', {
