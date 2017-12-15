@@ -13,11 +13,12 @@ The​ ​biggest​ ​obstacle​ ​that​ ​I​ ​faced​ ​in​ ​d
 enough​ ​period​ ​of​ ​time​ ​for​ ​the​ ​computation​ ​to​ ​begin.​ ​My​ ​assumption​ ​is​ ​that​ ​this​ ​has​ ​to​ ​do​ ​with some​ ​sort​ ​of​ ​session​ ​restriction​ ​in​ ​Meteor​ ​itself
 
 
-## Project​ ​Submission *Broken​ ​down​ ​into​ ​two​ ​parts 
+## Project​ ​Submission 
+### *Broken​ ​down​ ​into​ ​two​ ​parts 
 
 Part​ ​1​ ​-​ ​A​ ​mobile​ ​application​ ​that​ ​creates​ ​user​ ​profiles​ ​associated​ ​with​ ​unique​ ​generated​ ​codes, stores​ ​the​ ​codes​ ​in​ ​user​ ​profiles,​ ​and​ ​has​ ​the​ ​ability​ ​to​ ​have​ ​several​ ​parties​ ​connect​ ​to​ ​the server​ ​for​ ​a​ ​very​ ​brief​ ​period​ ​of​ ​time.
 
 
-## Part​ ​2​ ​-​ 
+Part​ ​2​ ​-​ 
 
 ​A​ ​standalone​ ​webpage​ ​running​ ​on​ ​Node.js​ ​that​ ​computes​ ​the​ ​diversity​ ​distribution analysis​ ​on​ ​a​ ​given​ ​number​ ​of​ ​parties​ ​and​ ​outputs​ ​a​ ​graph​ ​of​ ​the​ ​result
