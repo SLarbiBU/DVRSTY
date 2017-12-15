@@ -7,7 +7,7 @@ Uses Jiff framework found at https://github.com/multiparty/jiff to compute the s
 
 As​ ​I​ ​built​ ​and​ ​developed​ ​this​ ​application,​ ​I​ ​found​ ​that​ ​there​ ​was​ ​a​ ​lot​ ​of​ ​additional functionality​ ​I​ ​would​ ​like​ ​to​ ​include​ ​moving​ ​forward. 
 
-### First,​ 
+### First​ 
 
 ​I​ ​would​ ​explore​ ​alternative​ ​frameworks​ ​to​ ​use​ ​for​ ​the​ ​mobile​ ​application​ ​itself​ ​and find​ ​one​ ​that​ ​would​ ​integrate​ ​more​ ​seamlessly​ ​with​ ​Jiff. 
 
